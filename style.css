@@ -1,0 +1,51 @@
+[v-cloak] {
+    display: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background: #100a20;
+    color: #ffffff;
+    margin: 2rem;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #c3f53c;
+    text-shadow: 0 0 5px #c3f53c;
+}
+
+.stonk {
+    font-size: 2.5rem;
+    margin: 2rem 0;
+}
+
+.up {
+    --color: #c3f53c;
+}
+
+.down {
+    --color: #ff5a87;
+}
+
+.up .name,
+.down .name {
+    color: var(--color);
+    text-shadow: 0 0 10px var(--color);
+    transition: color 0.3s ease-in-out;
+}
+
+.diff {
+    font-size: 1rem;
+}
+
+.mute {
+    color: #878294;
+}

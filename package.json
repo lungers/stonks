@@ -1,0 +1,21 @@
+{
+    "name": "stonks",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "start": "parcel index.html",
+        "build": "parcel build index.html --dist-dir dist/"
+    },
+    "keywords": [],
+    "author": "Andrew Lane <contact@lungers.com>",
+    "license": "MIT",
+    "dependencies": {
+        "parcel": "^2.0.0-beta.2",
+        "sass": "^1.32.13",
+        "vue": "^3.0.11",
+        "vue-roller": "^1.12.4"
+    },
+    "devDependencies": {
+        "@parcel/transformer-vue": "^2.0.0-beta.2"
+    }
+}
