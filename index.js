@@ -17,6 +17,27 @@ const app = createApp({
     },
 
     computed: {
+        titleColor() {
+            const stonks = Object.values(this._stonks).filter(Boolean);
+
+            if (stonks.length === 0) {
+                return 'up';
+            }
+
+            const positive = stonks.some(stonk => {
+                if (!stonk) {
+                    return true;
+                }
+
+                const openPrice = Number(stonk.info.open_price);
+                const markPrice = Number(stonk.info.mark_price);
+                const diff = markPrice - openPrice;
+
+                return diff > 0;
+            });
+
+            return positive ? 'up' : 'down';
+        },
         stonks() {
             return Object.values(this._stonks).map(stonk => {
                 if (!stonk) {
@@ -25,13 +46,13 @@ const app = createApp({
 
                 const openPrice = Number(stonk.info.open_price);
                 const markPrice = Number(stonk.info.mark_price);
-                const diff = openPrice - markPrice;
+                const diff = markPrice - openPrice;
                 const decimalLength = markPrice > 1 ? 2 : 6;
 
                 return {
                     name: stonk.name,
-                    prefix: diff < 0 ? '+' : '-',
-                    className: diff < 0 ? 'up' : 'down',
+                    prefix: diff > 0 ? '+' : '-',
+                    className: diff > 0 ? 'up' : 'down',
                     price: this.formatNumber(markPrice, decimalLength),
                     diff: this.formatNumber(Math.abs(diff), decimalLength),
                     percentage: this.formatNumber(

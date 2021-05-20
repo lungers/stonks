@@ -18,8 +18,9 @@ body {
 .title {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #c3f53c;
-    text-shadow: 0 0 5px #c3f53c;
+    color: var(--color);
+    text-shadow: 0 0 5px var(--color);
+    transition: color 0.3s ease-in-out;
 }
 
 .stonk {
