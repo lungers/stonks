@@ -12,7 +12,6 @@ const app = createApp({
 
     data() {
         return {
-            test: Math.floor(Math.random() * 1000),
             _stonks: {},
         };
     },
@@ -48,10 +47,6 @@ const app = createApp({
         this.init('Dogecoin', 'crypto/doge');
         this.init('Ethereum', 'crypto/eth');
         this.init('Bitcoin', 'crypto/btc');
-
-        setInterval(() => {
-            this.test += 1;
-        }, 1000);
     },
 
     methods: {
