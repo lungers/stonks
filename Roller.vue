@@ -1,3 +1,5 @@
+// Modifed version of https://github.com/andy-0414/vue-roller
+
 <template>
     <transition-group tag="div" name="roller" class="roller">
         <component
