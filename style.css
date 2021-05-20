@@ -20,7 +20,7 @@ body {
     margin-bottom: 1rem;
     color: var(--color);
     text-shadow: 0 0 5px var(--color);
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 
 .stonk {
@@ -40,7 +40,7 @@ body {
 .down .name {
     color: var(--color);
     text-shadow: 0 0 10px var(--color);
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 
 .diff {
