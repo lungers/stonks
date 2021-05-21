@@ -19,12 +19,20 @@ const app = createApp({
 
     computed: {
         sortedStonks() {
-            return Object.values(this._stonks).sort((a, b) =>
-                a && b
-                    ? this.stonksOrder.indexOf(a.name) -
-                      this.stonksOrder.indexOf(b.name)
-                    : 0,
-            );
+            return Object.values(this._stonks).sort((a, b) => {
+                if (!a && !b) {
+                    return 0;
+                } else if (a && !b) {
+                    return 0;
+                } else if (!a && b) {
+                    return 1;
+                }
+
+                return (
+                    this.stonksOrder.indexOf(a.name) -
+                    this.stonksOrder.indexOf(b.name)
+                );
+            });
         },
         titleColor() {
             const stonks = this.sortedStonks.filter(Boolean);
