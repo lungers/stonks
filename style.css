@@ -28,16 +28,21 @@ body {
     margin: 2rem 0;
 }
 
-.up {
+.green {
     --color: #c3f53c;
 }
 
-.down {
+.orange {
+    --color: #e08f2c;
+}
+
+.red {
     --color: #ff5a87;
 }
 
-.up .name,
-.down .name {
+.green .name,
+.orange .name,
+.red .name {
     color: var(--color);
     text-shadow: 0 0 10px var(--color);
     transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;

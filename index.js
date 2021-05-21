@@ -30,10 +30,10 @@ const app = createApp({
             const stonks = this.sortedStonks.filter(Boolean);
 
             if (stonks.length === 0) {
-                return 'up';
+                return 'green';
             }
 
-            const positive = stonks.some(stonk => {
+            const diffs = stonks.map(stonk => {
                 if (!stonk) {
                     return true;
                 }
@@ -45,7 +45,11 @@ const app = createApp({
                 return diff > 0;
             });
 
-            return positive ? 'up' : 'down';
+            return diffs.every(Boolean)
+                ? 'green'
+                : diffs.some(Boolean)
+                ? 'orange'
+                : 'red';
         },
         stonks() {
             return this.sortedStonks.map(stonk => {
@@ -61,7 +65,7 @@ const app = createApp({
                 return {
                     name: stonk.name,
                     prefix: diff > 0 ? '+' : '-',
-                    className: diff > 0 ? 'up' : 'down',
+                    className: diff > 0 ? 'green' : 'red',
                     price: this.formatNumber(markPrice, decimalLength),
                     diff: this.formatNumber(Math.abs(diff), decimalLength),
                     percentage: this.formatNumber(
