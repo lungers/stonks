@@ -12,13 +12,22 @@ const app = createApp({
 
     data() {
         return {
+            stonksOrder: [],
             _stonks: {},
         };
     },
 
     computed: {
+        sortedStonks() {
+            return Object.values(this._stonks).sort((a, b) =>
+                a && b
+                    ? this.stonksOrder.indexOf(a.name) -
+                      this.stonksOrder.indexOf(b.name)
+                    : 0,
+            );
+        },
         titleColor() {
-            const stonks = Object.values(this._stonks).filter(Boolean);
+            const stonks = this.sortedStonks.filter(Boolean);
 
             if (stonks.length === 0) {
                 return 'up';
@@ -39,7 +48,7 @@ const app = createApp({
             return positive ? 'up' : 'down';
         },
         stonks() {
-            return Object.values(this._stonks).map(stonk => {
+            return this.sortedStonks.map(stonk => {
                 if (!stonk) {
                     return null;
                 }
@@ -78,6 +87,7 @@ const app = createApp({
         },
 
         init(name, path) {
+            this.stonksOrder.push(name);
             this._stonks[path] = null;
 
             this.getAuth(path).then(auth => {
