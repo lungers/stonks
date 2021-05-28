@@ -94,6 +94,7 @@ const app = createApp({
     methods: {
         formatNumber(number, decimalLength) {
             return number.toLocaleString(undefined, {
+                minimumFractionDigits: number % 1 === 0 ? 0 : 2,
                 maximumFractionDigits: decimalLength,
             });
         },
