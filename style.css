@@ -17,15 +17,25 @@ body {
 
 .title {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: var(--color);
     text-shadow: 0 0 5px var(--color);
     transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 
+.stonks {
+    display: flex;
+    gap: 3rem;
+}
+
+@media screen and (max-width: 800px) {
+    .stonks {
+        flex-direction: column;
+    }
+}
+
 .stonk {
     font-size: 2.5rem;
-    margin: 2rem 0;
 }
 
 .green {
