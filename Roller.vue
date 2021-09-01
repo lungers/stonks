@@ -19,7 +19,6 @@
             >
                 <li
                     class="roller__char__item"
-                    :class="{ copyable: t === char }"
                     v-for="char in findCharIndex(t, true) !== -1
                         ? charList
                         : [t]"
@@ -147,11 +146,7 @@ export default {
         list-style: none;
         flex-direction: column;
         .roller__char__item {
-            user-select: none;
             flex: 1;
-        }
-        .copyable {
-            user-select: all;
         }
     }
 }
