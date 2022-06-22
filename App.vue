@@ -24,6 +24,16 @@
 <script>
 import Roller from './Roller.vue';
 
+import loadingIcon from './images/loading.png';
+import greenIcon from './images/green.png';
+import redIcon from './images/red.png';
+
+const colorMap = {
+    orange: loadingIcon,
+    green: greenIcon,
+    red: redIcon,
+};
+
 const C = 'https://lungers.com/stonks/cors';
 const USER_AGENT =
     'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0';
@@ -76,11 +86,16 @@ export default {
                 return diff > 0;
             });
 
-            return diffs.every(Boolean)
+            const color = diffs.every(Boolean)
                 ? 'green'
                 : diffs.some(Boolean)
                 ? 'orange'
                 : 'red';
+
+            const favicon = document.getElementById('favicon');
+            favicon.href = colorMap[color];
+
+            return color;
         },
         stonks() {
             return this.sortedStonks.map(stonk => {
@@ -149,10 +164,11 @@ export default {
             });
             const content = await request.text();
 
-            const _html = document.createElement('html');
-            _html.innerHTML = content;
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(content, 'text/html');
+
             const data = JSON.parse(
-                _html.querySelector('#__NEXT_DATA__').textContent,
+                doc.querySelector('#__NEXT_DATA__').textContent,
             );
 
             const {
