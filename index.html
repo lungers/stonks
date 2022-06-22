@@ -17,30 +17,7 @@
         <meta property="og:description" content="very stonks! much wow!" />
     </head>
     <body>
-        <div id="app">
-            <h1 class="title" :class="titleColor">stonks!</h1>
-            <div class="stonks">
-                <div
-                    class="stonk"
-                    v-cloak=""
-                    v-for="(stonk, index) in stonks"
-                    :key="index"
-                >
-                    <div v-if="stonk" :class="stonk.className">
-                        <div class="name">{{ stonk.name }}</div>
-                        <div class="price">
-                            $<Roller :text="stonk.price"></Roller>
-                        </div>
-                        <div class="diff">
-                            {{ stonk.prefix }}${{ stonk.diff }} ({{ stonk.prefix
-                            }}{{ stonk.percentage }}%)
-                            <span class="mute">Today</span>
-                        </div>
-                    </div>
-                    <div v-else="">Loading...</div>
-                </div>
-            </div>
-        </div>
-        <script src="index.js"></script>
+        <div id="app"></div>
+        <script type="module" src="index.js"></script>
     </body>
 </html>
