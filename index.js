@@ -103,17 +103,21 @@ const app = createApp({
             this.stonksOrder.push(name);
             this._stonks[path] = null;
 
-            this.getAuth(path).then(auth => {
-                setInterval(() => {
-                    this.getInfo(auth).then(info => {
-                        this._stonks[path] = { name, info };
-                    });
-                }, 1000);
-            });
+            this.getInitialData(path).then(
+                ({ accessToken, currencyPair, info }) => {
+                    this._stonks[path] = { name, info };
+
+                    setInterval(() => {
+                        this.getInfo(accessToken, currencyPair).then(info => {
+                            this._stonks[path] = { name, info };
+                        });
+                    }, 1000);
+                },
+            );
         },
 
-        async getAuth(path) {
-            const request = await fetch(`${C}/robinhood.com:443/${path}`, {
+        async getInitialData(path) {
+            const request = await fetch(`${C}/robinhood.com:443/${path}/`, {
                 headers: {
                     Accept: 'text/html',
                     'User-Agent': USER_AGENT,
@@ -122,27 +126,38 @@ const app = createApp({
             });
             const content = await request.text();
 
-            const [, rawAuth] = content.match(
-                /^ *window\.auth *= *({.+?});? *$/m,
+            const _html = document.createElement('html');
+            _html.innerHTML = content;
+            const data = JSON.parse(
+                _html.querySelector('#__NEXT_DATA__').textContent,
             );
-            const auth = JSON.parse(rawAuth);
 
-            const [, currencyPair] = content.match(
-                /content="robinhood:\/\/currency_pair\?id=([^"]+)"/,
+            const {
+                accessToken,
+                currencyPair: { id: currencyPair },
+                dehydratedState: { queries },
+            } = data.props.pageProps;
+            const {
+                state: { data: info },
+            } = queries.find(
+                query =>
+                    Array.isArray(query.queryKey) &&
+                    query.queryKey[0] === 'currencyPairQuote',
             );
 
             return {
-                auth,
+                accessToken,
                 currencyPair,
+                info,
             };
         },
 
-        async getInfo({ auth, currencyPair }) {
+        async getInfo(accessToken, currencyPair) {
             const request = await fetch(
                 `${C}/api.robinhood.com:443/marketdata/forex/quotes/${currencyPair}/`,
                 {
                     headers: {
-                        Authorization: `${auth.token_type} ${auth.access_token}`,
+                        Authorization: `Bearer ${accessToken}`,
                         'User-Agent': USER_AGENT,
                         'X-Requested-With': 'magic',
                     },
