@@ -112,7 +112,7 @@ export default {
     }
 }
 .roller {
-    display: inline-block;
+    display: inline-flex;
     .roller__wrapper {
         display: inline-flex;
         position: relative;

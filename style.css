@@ -38,6 +38,12 @@ body {
     font-size: 2.5rem;
 }
 
+.price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .green {
     --color: #c3f53c;
 }
