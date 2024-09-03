@@ -9,9 +9,9 @@
         >
             <div v-if="stonk" :class="stonk.className">
                 <div class="name">{{ stonk.name }}</div>
-                <div class="price">$<Roller :text="stonk.price"></Roller></div>
+                <div class="price">€<Roller :text="stonk.price"></Roller></div>
                 <div class="diff">
-                    {{ stonk.prefix }}${{ stonk.diff }} ({{ stonk.prefix
+                    {{ stonk.prefix }}€{{ stonk.diff }} ({{ stonk.prefix
                     }}{{ stonk.percentage }}%)
                     <span class="mute">Today</span>
                 </div>
@@ -124,9 +124,9 @@ export default {
     },
 
     created() {
-        this.init('Dogecoin', 'crypto/doge');
-        this.init('Ethereum', 'crypto/eth');
-        this.init('Bitcoin', 'crypto/btc');
+        this.init('Dogecoin', 'eu/en/crypto/doge');
+        this.init('Ethereum', 'eu/en/crypto/eth');
+        this.init('Bitcoin', 'eu/en/crypto/btc');
     },
 
     methods: {
@@ -155,7 +155,7 @@ export default {
         },
 
         async getInitialData(path) {
-            const request = await fetch(`${C}/robinhood.com:443/${path}/`, {
+            const request = await fetch(`${C}/robinhood.com/${path}/`, {
                 headers: {
                     Accept: 'text/html',
                     'User-Agent': USER_AGENT,
@@ -172,10 +172,12 @@ export default {
             );
 
             const {
-                accessToken,
                 currencyPair: { id: currencyPair },
                 dehydratedState: { queries },
             } = data.props.pageProps;
+            const {
+                state: { data: accessToken },
+            } = queries.find(query => query.queryKey === 'accessTokenServer');
             const {
                 state: { data: info },
             } = queries.find(
@@ -193,7 +195,7 @@ export default {
 
         async getInfo(accessToken, currencyPair) {
             const request = await fetch(
-                `${C}/api.robinhood.com:443/marketdata/forex/quotes/${currencyPair}/`,
+                `${C}/api.robinhood.com/marketdata/forex/quotes/${currencyPair}/`,
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
